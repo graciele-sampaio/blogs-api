@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
-    id:  {
+    id: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,

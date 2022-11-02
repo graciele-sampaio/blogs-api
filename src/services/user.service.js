@@ -1,4 +1,5 @@
 const { User } = require('../models');
+const { createToken } = require('../utils/jwt.util');
 
 const createUserService = async ({ displayName, email, password, image }) => {
   const compareEmail = await User.findOne({ where: { email } });
@@ -8,8 +9,9 @@ const createUserService = async ({ displayName, email, password, image }) => {
   }
 
   const newUser = await User.create({ displayName, email, password, image });
-  console.log('service', newUser);
-  return { type: null, message: newUser };
+
+  const newToken = createToken(newUser);
+  return { type: null, message: newToken };
 };
 
 module.exports = {
