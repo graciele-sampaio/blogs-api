@@ -1,11 +1,6 @@
-const Joi = require('joi');
+const { loginSchema } = require('../services/validations/schemas');
 
 const validateDataLogin = (req, res, next) => {
-  const loginSchema = Joi.object({
-      email: Joi.string().email().required(),
-      password: Joi.string().required(),
-  });
-
   const { error } = loginSchema.validate(req.body);
 
   if (error) {
