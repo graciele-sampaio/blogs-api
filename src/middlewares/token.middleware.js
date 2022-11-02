@@ -1,4 +1,4 @@
-const { verifyToken } = require('../utils/jwt.util');
+const { verifyToken } = require('./verifyToken.middleware');
 
 const validateToken = (req, res, next) => {
   const { authorization } = req.headers;
@@ -7,11 +7,11 @@ const validateToken = (req, res, next) => {
 
   if (!auth) return res.status(401).json({ message: 'Token not found' });
   
-  const user = verifyToken(auth);
+  const tokenIsValid = verifyToken(auth);
 
-  if (auth.type === 401) return res.status(401).json({ message: user.message });
+  if (tokenIsValid.type === 401) return res.status(401).json({ message: tokenIsValid.message });
 
-  req.user = user.validateToken;
+  req.user = tokenIsValid;
 
   next();
 };
