@@ -16,11 +16,20 @@ const createUserService = async ({ displayName, email, password, image }) => {
 
 const getAllUsersServices = async () => {
   const getAll = await User.findAll({ attributes: { exclude: ['password'] } });
-  console.log('service', getAll);
   return getAll;
+};
+
+const getUserByIdServices = async (id) => {
+  const getById = await User.findOne({ 
+    where: { id },
+    attributes: { exclude: ['password'] },
+  });
+  if (!getById) return { type: 404, message: 'User does not exist' };
+  return { type: null, message: getById };
 };
 
 module.exports = {
   createUserService,
   getAllUsersServices,
+  getUserByIdServices,
 };
